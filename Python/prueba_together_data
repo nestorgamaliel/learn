@@ -1,0 +1,32 @@
+import together
+import pandas as pd
+import numpy as np
+
+
+# Configurar la API Key (mejor usar una variable de entorno)
+import os
+os.environ["TOGETHER_API_KEY"] = "6d32b7529e457e37c3ba86863912877fa27b4b693f48fb5556756f10343df29c"
+
+ruta = r"g:\My Drive\Estudios\UMA\UMA2025\Ciencia de datos\Presentaciones\4. Dataset.csv"
+datacsv = pd.read_csv(ruta, header=0)
+
+# Crear el prompt para el modelo de IA
+prompt_propio = f"""
+Con el siguiente dataframe:
+{datacsv}
+
+Por favor, descubre algo significativo que mencionar acerca de las personas morosas.
+"""
+
+# Hacer la solicitud a Together.AI
+respuesta = together.Completion.create(
+    model="mistralai/Mistral-7B-Instruct-v0.1",  # Modelo recomendado
+    prompt=prompt_propio,
+    max_tokens=100,
+    temperature=0.7
+)
+
+
+
+# Mostrar la respuesta generada
+print(respuesta.choices[0].text)
